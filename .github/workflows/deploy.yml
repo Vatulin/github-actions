@@ -1,0 +1,60 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch: 
+
+env: 
+  COMPOSE_PROJECT_NAME: myapp 
+
+jobs:
+  deploy-and-test:
+    runs-on: self-hosted
+    permissions:
+      contents: read
+      issues: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create .env file from secrets 
+        shell: cmd
+        run: |
+          echo # Database configuration > .env
+          echo DB_HOST=${{ secrets.DB_HOST }} >> .env
+          echo DB_PORT=${{ secrets.DB_PORT }} >> .env
+          echo DB_NAME=${{ secrets.DB_NAME }} >> .env
+          echo DB_USER=${{ secrets.DB_USER }} >> .env
+          echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
+          echo # Application configuration >> .env
+          echo APP_PORT=${{ secrets.APP_PORT }} >> .env
+          echo APP_SECRET=${{ secrets.APP_SECRET }} >> .env
+          echo API_KEY=${{ secrets.API_KEY }} >> .env
+          echo # Docker configuration >> .env
+          echo COMPOSE_PROJECT_NAME=${{ env.COMPOSE_PROJECT_NAME }} >> .env
+          echo "✅ .env file created successfully" 
+          echo "Contents (masked):" 
+          type .env | findstr /n ".*"
+
+      - name: Deploy with Docker Compose
+        shell: cmd
+        run: | 
+          echo "🚀 Starting application stack..." 
+          docker-compose up -d
+          echo "⏳ Waiting for services to start..." 
+          ping -n 30 127.0.0.1 > nul
+          echo "📊 Checking container status..." 
+          docker-compose ps
+
+      - name: Verify containers are running
+        run: |
+          docker-compose ps | find "Up" > nul
+          if if %errorlevel% == 0 (
+            echo "✅ All containers are running"
+          ) else (
+            echo "❌ Some containers failed to start"
+            docker-compose logs
+            exit /b 1
+          )
