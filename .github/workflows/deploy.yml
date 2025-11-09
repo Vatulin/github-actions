@@ -38,16 +38,9 @@ jobs:
       - name: Deploy with Docker Compose
         shell: cmd
         run: | 
-          echo "🔍 Checking for compose files:"
-          dir *.yml
-          dir *.yaml
-          echo.
-          
-          echo "🔍 Docker system info:"
-          docker --version
-          docker-compose --version
-          echo.
-          
+          cd ../../../../
+          cd mysite
+
           echo "🚀 Starting application stack..." 
           docker-compose up -d
           echo "⏳ Waiting for services to start..." 
