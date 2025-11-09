@@ -52,7 +52,7 @@ jobs:
         shell: cmd
         run: |
           docker-compose ps | find "Up" > nul
-          if if %errorlevel% == 0 (
+          if %errorlevel% == 0 (
             echo "✅ All containers are running"
           ) else (
             echo "❌ Some containers failed to start"
