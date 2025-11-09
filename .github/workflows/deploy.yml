@@ -11,9 +11,6 @@ env:
 jobs:
   deploy-and-test:
     runs-on: self-hosted
-    permissions:
-      contents: read
-      issues: write
     
     steps:
       - name: Checkout code
@@ -41,10 +38,20 @@ jobs:
       - name: Deploy with Docker Compose
         shell: cmd
         run: | 
+          echo "🔍 Checking for compose files:"
+          dir *.yml
+          dir *.yaml
+          echo.
+          
+          echo "🔍 Docker system info:"
+          docker --version
+          docker-compose --version
+          echo.
+          
           echo "🚀 Starting application stack..." 
           docker-compose up -d
           echo "⏳ Waiting for services to start..." 
-          ping -n 30 127.0.0.1 > nul
+          timeout /t 30 /nobreak > nul
           echo "📊 Checking container status..." 
           docker-compose ps
 
