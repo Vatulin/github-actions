@@ -86,8 +86,8 @@ jobs:
 
           :: Тест 2: Сравнение данных БД и веб-интерфейса 
           echo "2. Testing data consistency..." 
-          for /f "delims=" %i in ('docker-compose exec -T db psql -U user -d mydatabase -t -c "SELECT COUNT(*) FROM auth_user;"') do (
-          set "USER_COUNT=%i"
-          set "USER_COUNT=!USER_COUNT: =!"
-          )
-          echo User count: !USER_COUNT!
+          docker-compose exec -T db psql -U user -d mydatabase -t -c "SELECT COUNT(*) FROM auth_user;" > temp.txt
+          set /p USER_COUNT=<temp.txt
+          set USER_COUNT=%USER_COUNT: =%
+          echo User count: %USER_COUNT%
+          del temp.txt
