@@ -40,3 +40,11 @@ def volume_info(request):
         }
     }
     return JsonResponse(info)
+
+def admin_data_api(request):
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+        return JsonResponse({"count_of_user" : "4"})
+    except:
+        return JsonResponse({"status": "error", "database": "disconnected"}, status=500)

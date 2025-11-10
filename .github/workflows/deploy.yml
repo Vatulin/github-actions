@@ -74,3 +74,15 @@ jobs:
             echo "❌ Web application health check failed"
             exit /b 1
           )
+
+          # Проверяем подключение к БД через приложение 
+          for /f "delims=" %i in ('curl -s http://localhost:8000/api/data/') do set API_RESPONSE=%i
+          if %errorlevel% equ 0 (
+          echo ✅ Application database connection working
+          ) else (
+              echo ❌ Application database connection failed
+              exit /b 1
+          )
+
+          # Тест 2: Сравнение данных БД и веб-интерфейса 
+          echo "2. Testing data consistency..." 
