@@ -76,13 +76,18 @@ jobs:
           )
 
           :: Проверяем подключение к БД через приложение 
-          for /f "delims=" %i in ('curl -s http://localhost:8000/api/data/') do set API_RESPONSE=%i
+          curl -s http://localhost:%APP_PORT%/api/data > nul
           if %errorlevel% equ 0 (
-          echo ✅ Application database connection working
+              echo ✅ Application database connection working
           ) else (
               echo ❌ Application database connection failed
-              exit /b 1 
+              exit /b 1
           )
 
-          # Тест 2: Сравнение данных БД и веб-интерфейса 
+          :: Тест 2: Сравнение данных БД и веб-интерфейса 
           echo "2. Testing data consistency..." 
+          for /f "delims=" %%i in ('docker-compose exec -T db psql -U user -d mydatabase -t -c "SELECT COUNT(*) FROM auth_user;"') do (
+          set "USER_COUNT=%%i"
+          set "USER_COUNT=!USER_COUNT: =!"
+          )
+          echo User count: !USER_COUNT!
