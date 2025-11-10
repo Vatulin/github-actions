@@ -59,3 +59,18 @@ jobs:
             docker-compose logs
             exit /b 1
           )
+
+      - name: Run application tests
+        shell: cmd
+        run: | 
+          echo "🧪 Running application tests..." 
+          # Тест 1: Проверка работы приложения и БД 
+          echo "1. Testing application and database connectivity..." 
+
+          curl -f http://localhost:8000/health/
+          if %errorlevel% == 0 (
+            echo "✅ Web application is healthy"
+          ) else (
+            echo "❌ Web application health check failed"
+            exit /b 1
+          )
