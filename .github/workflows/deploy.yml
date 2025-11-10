@@ -64,7 +64,7 @@ jobs:
         shell: cmd
         run: | 
           echo "🧪 Running application tests..." 
-          # Тест 1: Проверка работы приложения и БД 
+          :: Тест 1: Проверка работы приложения и БД 
           echo "1. Testing application and database connectivity..." 
 
           curl -f http://localhost:8000/health/
@@ -75,13 +75,13 @@ jobs:
             exit /b 1
           )
 
-          # Проверяем подключение к БД через приложение 
+          :: Проверяем подключение к БД через приложение 
           for /f "delims=" %i in ('curl -s http://localhost:8000/api/data/') do set API_RESPONSE=%i
           if %errorlevel% equ 0 (
           echo ✅ Application database connection working
           ) else (
               echo ❌ Application database connection failed
-              exit /b 1
+              exit /b 1 
           )
 
           # Тест 2: Сравнение данных БД и веб-интерфейса 
