@@ -42,6 +42,8 @@ jobs:
           cd mysite
 
           echo "🚀 Starting application stack..." 
+          docker-compose build
+          timeout /t 30 /nobreak > nul
           docker-compose up -d
           echo "⏳ Waiting for services to start..." 
           timeout /t 30 /nobreak > nul
