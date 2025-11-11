@@ -12,9 +12,9 @@ services:
       - static_volume:/app/staticfiles
       - media_volume:/app/media
     environment:
-      - DATABASE_URL=postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@db:5432/mydatabase
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DATABASE_URL=postgresql://user:password@db:5432/mydatabase
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
     depends_on:
       - db
     deploy:
@@ -26,8 +26,8 @@ services:
   db:
     image: postgres:latest
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
       POSTGRES_DB: mydatabase
     volumes:
       - db_data:/var/lib/postgresql/data
