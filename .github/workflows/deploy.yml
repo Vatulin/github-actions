@@ -143,17 +143,12 @@ jobs:
           echo - Database records: %DB_COUNT%
           echo - Web API records: %WEB_COUNT%
           ) > test-report.md
-
-      - name: Verify downloaded artifacts
-        run: |
-          copy .env environment.txt
       
       - name: Save artifacts
         uses: actions/upload-artifact@v4
         with:
           name: deployment-artifacts
-          run: |
-            copy .env environment.txt
+          run: copy .env environment.txt
           path: |
             environment.txt
             test-report.md
