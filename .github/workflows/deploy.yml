@@ -152,8 +152,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: deployment-artifacts
+          run: |
+            copy .env environment.txt
           path: |
-            .env
             environment.txt
             test-report.md
             deployment-logs.txt 
