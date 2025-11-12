@@ -100,5 +100,5 @@ jobs:
           del temp.txt
           echo Count: %WEB_COUNT%
 
-          echo "Database count: $DB_COUNT" 
+          echo "Database count: %DB_COUNT%" 
           echo "Web API count: %WEB_COUNT%" 
