@@ -109,9 +109,21 @@ jobs:
             echo "❌ Data consistency test failed"
             exit /b 1 
           )
+
+          ::Сохраняем значения для следующего шага
+          echo %DB_COUNT% > db_count.txt
+          echo %WEB_COUNT% > web_count.txt
+
       - name: Run application tests
         shell: cmd
         run: |
+
+          ::Считываем даынне предыдущего шага и удаляем файлы
+          set /p DB_COUNT=<db_count.txt
+          set /p WEB_COUNT=<web_count.txt
+          del db_count.txt
+          del web_count.txt
+
           echo "📋 Creating test report..."
           set CURRENT_DATE=%date% %time%
           (
