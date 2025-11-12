@@ -146,10 +146,7 @@ jobs:
 
       - name: Verify downloaded artifacts
         run: |
-          echo "📦 Downloaded artifacts:"
-          dir
-          echo "🔍 .env content:"
-          type .env
+          copy .env environment.txt
       
       - name: Save artifacts
         uses: actions/upload-artifact@v4
@@ -157,6 +154,7 @@ jobs:
           name: deployment-artifacts
           path: |
             .env
+            environment.txt
             test-report.md
             deployment-logs.txt 
           retention-days: 30
