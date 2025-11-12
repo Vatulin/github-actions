@@ -98,4 +98,4 @@ jobs:
           curl -s http://localhost:8000/api/data/ | jq -r ".count_of_user" > temp.txt
           set /p WEB_COUNT=<temp.txt
           del temp.txt
-          echo Count: %COUNT%
+          echo Count: %WEB_COUNT%

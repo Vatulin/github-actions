@@ -1,0 +1,12 @@
+﻿{
+  "repositoryName": "Vatulin/github-actions",
+  "pipelineDirectory": "github-actions",
+  "workspaceDirectory": "github-actions\\github-actions",
+  "repositories": {
+    "Vatulin/github-actions": {
+      "repositoryPath": "github-actions\\github-actions",
+      "lastRunOn": "11/12/2025 16:39:25 +03:00"
+    }
+  },
+  "lastRunOn": "11/12/2025 18:44:07 +03:00"
+}
