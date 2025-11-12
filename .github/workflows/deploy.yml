@@ -74,7 +74,7 @@ jobs:
           :: Тест 1: Проверка работы приложения и БД 
           echo "1. Testing application and database connectivity..." 
 
-          curl -f http://localhost:8000/health/
+          curl -f http://localhost:${{ secrets.APP_PORT }}/health/
           if %errorlevel% equ 0 (
             echo "✅ Web application is healthy"
           ) else (
@@ -83,7 +83,7 @@ jobs:
           )
 
           :: Проверяем подключение к БД через приложение 
-          curl -s http://localhost:8000/api/data > nul
+          curl -s http://localhost:${{ secrets.APP_PORT }}/api/data > nul
           if %errorlevel% equ 0 (
               echo ✅ Application database connection working
           ) else (
@@ -95,13 +95,13 @@ jobs:
           echo "2. Testing data consistency..." 
           
           :: Получаем данные напрямую из БД 
-          docker-compose exec -T db psql -U user -d mydatabase -t -c "SELECT COUNT(*) FROM auth_user;" > temp.txt
+          docker-compose exec -T db psql -U ${{ secrets.DB_USER }} -d ${{secrets.DB_NAME}} -t -c "SELECT COUNT(*) FROM auth_user;" > temp.txt
           set /p DB_COUNT=<temp.txt
           set DB_COUNT=%DB_COUNT: =%
           del temp.txt
 
           :: Получаем данные через веб-API 
-          curl -s http://localhost:8000/api/data/ | jq -r ".count_of_user" > temp.txt
+          curl -s http://localhost:${{ secrets.APP_PORT }}/api/data/ | jq -r ".count_of_user" > temp.txt
           set /p WEB_COUNT=<temp.txt
           del temp.txt
           echo Count: %WEB_COUNT%
