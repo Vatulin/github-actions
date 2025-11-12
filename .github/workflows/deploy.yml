@@ -34,7 +34,7 @@ jobs:
           echo "✅ .env file created successfully" 
           echo "Contents (masked):" 
           type .env | findstr /n ".*"
-          run: copy .env environment.txt
+          copy .env environment.txt
 
       - name: Deploy with Docker Compose
         shell: cmd
