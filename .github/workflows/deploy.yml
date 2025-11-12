@@ -69,7 +69,7 @@ jobs:
           echo "1. Testing application and database connectivity..." 
 
           curl -f http://localhost:8000/health/
-          if %errorlevel% == 0 (
+          if %errorlevel% equ 0 (
             echo "✅ Web application is healthy"
           ) else (
             echo "❌ Web application health check failed"
@@ -102,3 +102,10 @@ jobs:
 
           echo "Database count: %DB_COUNT%" 
           echo "Web API count: %WEB_COUNT%" 
+
+          if %DB_COUNT% equ %WEB_COUNT% (
+            echo "✅ Data consistency test passed"
+          ) else (
+            echo "❌ Data consistency test failed"
+            exit /b 1 
+          )
