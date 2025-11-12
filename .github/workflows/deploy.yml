@@ -135,9 +135,9 @@ jobs:
           echo - Containers: Running ✅
           echo.
           echo ## Environment Variables
-          echo - DB_HOST: %DB_HOST%
-          echo - DB_NAME: %DB_NAME%
-          echo - APP_PORT: %APP_PORT%
+          echo - DB_HOST: ${{ secrets.DB_HOST }}
+          echo - DB_NAME:  ${{ secrets.DB_NAME }}
+          echo - APP_PORT:  ${{ secrets.APP_PORT }}
           echo.
           echo ## Test Results
           echo - Database records: %DB_COUNT%
