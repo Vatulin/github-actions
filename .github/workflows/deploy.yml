@@ -24,7 +24,7 @@ jobs:
         run: |
           echo # Database configuration > .env
           echo DB_HOST=%DB_HOST% >> .env
-          echo DB_PORT=${{ secrets.DB_PORT }} >> .env
+          echo DB_PORT=${{ env.DB_PORT }} >> .env
           echo DB_NAME=%DB_NAME% >> .env
           echo DB_USER=${{ secrets.DB_USER }} >> .env
           echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
