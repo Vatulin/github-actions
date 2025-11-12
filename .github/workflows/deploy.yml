@@ -38,6 +38,7 @@ jobs:
           echo # Docker configuration >> .env
           echo COMPOSE_PROJECT_NAME=${{ env.COMPOSE_PROJECT_NAME }} >> .env
           echo "✅ .env file created successfully" 
+          
           echo "Contents (masked):" 
           type .env | findstr /n ".*"
 
