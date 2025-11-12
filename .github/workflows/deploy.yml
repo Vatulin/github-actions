@@ -143,6 +143,13 @@ jobs:
           echo - Database records: %DB_COUNT%
           echo - Web API records: %WEB_COUNT%
           ) > test-report.md
+
+      - name: Verify downloaded artifacts
+        run: |
+          echo "📦 Downloaded artifacts:"
+          dir
+          echo "🔍 .env content:"
+          type .env
       
       - name: Save artifacts
         uses: actions/upload-artifact@v4
@@ -151,6 +158,7 @@ jobs:
           path: |
             .env
             test-report.md
+            deployment-logs.txt 
           retention-days: 30
 
 
