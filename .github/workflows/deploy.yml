@@ -91,7 +91,6 @@ jobs:
           :: Получаем данные напрямую из БД 
           docker-compose exec -T db psql -U user -d mydatabase -t -c "SELECT COUNT(*) FROM auth_user;" > temp.txt
           set /p DB_COUNT=<temp.txt
-          set USER_COUNT=%DB_COUNT: =%
           del temp.txt
 
           :: Получаем данные через веб-API 
@@ -99,3 +98,6 @@ jobs:
           set /p WEB_COUNT=<temp.txt
           del temp.txt
           echo Count: %WEB_COUNT%
+
+          echo "Database count: %DB_COUNT%" 
+          echo "Web API count: %WEB_COUNT%" 
