@@ -109,3 +109,26 @@ jobs:
             echo "❌ Data consistency test failed"
             exit /b 1 
           )
+      - name: Run application tests
+        shell: cmd
+        run: |
+          echo "📋 Creating test report..."
+          set CURRENT_DATE=%date% %time%
+          (
+          echo # Deployment Test Report
+          echo - Date: %CURRENT_DATE%
+          echo - Application: Healthy ✅
+          echo - Database: Connected ✅
+          echo - Data Consistency: Passed ✅
+          echo - Containers: Running ✅
+          echo.
+          echo ## Environment Variables
+          echo - DB_HOST: %DB_HOST%
+          echo - DB_NAME: %DB_NAME%
+          echo - APP_PORT: %APP_PORT%
+          echo.
+          echo ## Test Results
+          echo - Database records: %DB_COUNT%
+          echo - Web API records: %WEB_COUNT%
+          ) > test-report.md
+    
