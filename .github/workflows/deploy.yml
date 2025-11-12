@@ -36,7 +36,7 @@ jobs:
           echo COMPOSE_PROJECT_NAME=${{ env.COMPOSE_PROJECT_NAME }} >> .env
           echo "✅ .env file created successfully" 
           echo "Contents (masked):" 
-          type .env | findstr /n ".*"
+          ::type .env | findstr /n ".*"
 
       - name: Deploy with Docker Compose
         shell: cmd
