@@ -17,10 +17,12 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Debug secrets
+        shell: pwsh
         run: |
-          echo "DB_HOST exists: ${{ secrets.DB_HOST != '' }}"
-          echo "DB_NAME exists: ${{ secrets.DB_NAME != '' }}"
-          # и так для всех секретов
+          Write-Host "DB_HOST exists: ${{ secrets.DB_HOST != '' }}"
+          Write-Host "DB_NAME exists: ${{ secrets.DB_NAME != '' }}"
+          Write-Host "APP_SECRET exists: ${{ secrets.APP_SECRET != '' }}"
+          Write-Host "API_KEY exists: ${{ secrets.API_KEY != '' }}"
 
       - name: Create .env file from secrets 
         shell: cmd
