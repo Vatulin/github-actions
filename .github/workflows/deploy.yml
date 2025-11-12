@@ -87,8 +87,15 @@ jobs:
 
           :: Тест 2: Сравнение данных БД и веб-интерфейса 
           echo "2. Testing data consistency..." 
+          
+          :: Получаем данные напрямую из БД 
           docker-compose exec -T db psql -U user -d mydatabase -t -c "SELECT COUNT(*) FROM auth_user;" > temp.txt
-          set /p USER_COUNT=<temp.txt
-          set USER_COUNT=%USER_COUNT: =%
-          echo User count: %USER_COUNT%
+          set /p DB_COUNT=<temp.txt
+          set USER_COUNT=%DB_COUNT: =%
           del temp.txt
+
+          :: Получаем данные через веб-API 
+          curl -s http://localhost:8000/api/data/ | jq -r ".count_of_user" > temp.txt
+          set /p WEB_COUNT=<temp.txt
+          del temp.txt
+          echo Count: %COUNT%
